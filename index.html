@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="Generate secure, random passwords with customizable options. Choose length and character types for strong, unique passwords.">
+	<title>Secure Random Password Generator | Create Strong Passwords</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			line-height: 1.6;
+		}
+
+		h1,
+		h2 {
+			color: #333;
+		}
+
+		.password-generator {
+			background-color: #f9f9f9;
+			border: 1px solid #ddd;
+			padding: 20px;
+			border-radius: 5px;
+			margin-bottom: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+
+		input[type="number"] {
+			width: 100%;
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.checkbox-group {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		button {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 10px;
+			font-size: 16px;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		#password {
+			width: 100%;
+			padding: 10px;
+			margin-top: 20px;
+			font-size: 18px;
+			text-align: center;
+			border: 1px solid #ddd;
+			background-color: #f0f0f0;
+			border-radius: 4px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Secure Random Password Generator</h1>
+	</header>
+
+	<main>
+		<section class="password-generator">
+			<h2>Create Your Strong Password</h2>
+			<div class="form-group">
+				<label for="length">Password Length:</label>
+				<input type="number" id="length" min="8" max="50" value="12" aria-describedby="length-description">
+				<p id="length-description">Choose a length between 8 and 50 characters</p>
+			</div>
+			<div class="form-group">
+				<label>Include:</label>
+				<div class="checkbox-group">
+					<label><input type="checkbox" id="lowercase" checked> Lowercase letters</label>
+					<label><input type="checkbox" id="uppercase" checked> Uppercase letters</label>
+					<label><input type="checkbox" id="numbers" checked> Numbers</label>
+					<label><input type="checkbox" id="symbols"> Symbols</label>
+				</div>
+			</div>
+			<button onclick="generatePassword()">Generate Password</button>
+			<button onclick="copyPassword()">Copy Password</button>
+			<input type="text" id="password" readonly aria-label="Generated Password">
+		</section>
+
+		<section>
+			<h2>Why Use a Strong Password?</h2>
+			<p>In today's digital age, having a strong, unique password for each of your online accounts is crucial. A strong
+				password helps protect your personal information from unauthorized access and potential cyber threats. Our
+				password generator creates complex passwords that are difficult for hackers to guess or crack.</p>
+		</section>
+
+		<section>
+			<h2>Tips for Password Security</h2>
+			<ul>
+				<li>Use a different password for each account</li>
+				<li>Make your passwords at least 12 characters long</li>
+				<li>Include a mix of uppercase and lowercase letters, numbers, and symbols</li>
+				<li>Avoid using personal information in your passwords</li>
+				<li>Consider using a password manager to securely store your passwords</li>
+			</ul>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; 2024 Secure Password Generator. All rights reserved.</p>
+	</footer>
+
+	<script>
+		function generatePassword() {
+			const length = document.getElementById('length').value
+			const lowercase = document.getElementById('lowercase').checked
+			const uppercase = document.getElementById('uppercase').checked
+			const numbers = document.getElementById('numbers').checked
+			const symbols = document.getElementById('symbols').checked
+
+			let chars = ''
+			if (lowercase) chars += 'abcdefghijklmnopqrstuvwxyz'
+			if (uppercase) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+			if (numbers) chars += '0123456789'
+			if (symbols) chars += '!@#$%^&*()_+~`|}{[]:;?><,./-='
+
+			if (chars === '') {
+				alert('Please select at least one character type.')
+				return
+			}
+
+			let password = ''
+			for (let i = 0; i < length; i++) {
+				password += chars.charAt(Math.floor(Math.random() * chars.length))
+			}
+
+			document.getElementById('password').value = password
+		}
+
+		function copyPassword() {
+			const passwordField = document.getElementById('password')
+			passwordField.select()
+			document.execCommand('copy')
+			alert('Password copied to clipboard!')
+		}
+	</script>
+</body>
+
+</html>
